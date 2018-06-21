@@ -19,7 +19,7 @@ export class DynamicformComponent implements OnInit {
         name: 'Firstname',
         dataType: 'text',
         options: null,
-        validations: null,
+        validations: ['required'],
         value: ''
       },
       {
@@ -58,7 +58,7 @@ export class DynamicformComponent implements OnInit {
     const formValidators = [];
 
     if (validators) {
-      for (const validation of Object.keys(validators)) {
+      for (const validation of validators) {
         if (validation === 'required') {
           formValidators.push(Validators.required);
         } else if (validation === 'min') {
