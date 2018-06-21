@@ -1,0 +1,64 @@
+<form novalidate
+      (ngSubmit)="onSubmit(dynamicForm.value)"
+      [formGroup]="dynamicForm">
+  <div *ngFor="let attribute of attributesList">
+    <label [attr.for]="attribute">{{attribute.name}}</label>
+
+    <div [ngSwitch]="attribute.dataType">
+      <mat-form-field *ngSwitchCase="'text'">
+        <input matInput
+               [formControlName]="attribute.name"
+               [id]="attribute.name"
+               [type]="attribute.dataType">
+      </mat-form-field>
+
+      <mat-form-field *ngSwitchCase="'select'">
+        <mat-select [formControlName]="attribute.name">
+          <mat-option *ngFor="let option of attribute.options"
+                      [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'multiselect'">
+        <div>
+          <select [formControlName]="attribute.name">
+            <option *ngFor="let option of attribute.options"
+                    [value]="option">
+              {{ option }}
+            </option>
+          </select>
+        </div>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'date'">
+        <input matInput
+               [matDatepicker]="picker"
+               [formControlName]="attribute.name"
+               placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix
+                               [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="full-width"
+                      *ngSwitchCase="'textarea'">
+        <input matInput
+               [formControlName]="attribute.name"
+               [type]="attribute?.dataType">
+      </mat-form-field>
+
+      <div class="error"
+           *ngIf="dynamicForm.get(attribute.name).invalid && (dynamicForm.get(attribute.name).dirty || dynamicForm.get(attribute.name).touched)">
+        <div *ngIf="dynamicForm.get(attribute.name).errors">
+          {{ attribute.name }} is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <p>
+    <button (click)="onSubmit(dynamicForm)"
+            [disabled]="!dynamicForm.valid"
+            mat-raised-button
+            color="accent">Submit</button>
+  </p>
+</form>
