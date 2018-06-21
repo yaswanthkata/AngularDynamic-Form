@@ -1,8 +1,9 @@
 # DynamicForm
-
+This is a sample project on how to generate Angualr material forms based on data from your service.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
-#Dependenices
+# DynamicForm
+
 Angular Material.
 
 ## Development server
